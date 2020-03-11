@@ -1,3 +1,6 @@
+/* eslint-disable no-console, no-param-reassign, no-use-before-define */
+// In production, we register a service worker to serve assets from local cache.
+
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -101,7 +104,7 @@ function registerValidSW(swUrl, config) {
 function checkValidServiceWorker(swUrl, config) {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl, {
-    headers: { 'Service-Worker': 'script' }
+    headers: { 'Service-Worker': 'script' },
   })
     .then(response => {
       // Ensure service worker exists, and that we really are getting a JS file.
