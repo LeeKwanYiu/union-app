@@ -1,48 +1,47 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { increment } from '../../actions/index';
-import style from './index.less';
+import { Layout } from 'antd';
+import { Switch, Route, Redirect } from 'react-router-dom'
+import HeaderNav from './components/HeaderNav';
+import MyUnion from '../MyUnion';
+import Home from '../Home';
+import Union from '../Union';
+import Login from '../Login';
+import styles from './index.less';
 
+const { Content } = Layout
+/**
+ * App组件
+ * 定义整个页面的布局
+ */
 class App extends React.Component {
-  onClick() {
-    this.props.dispatch(increment());
-  }
+  componentDidMount() {
 
-  onClick2() {
-    this.props.dispatch({ type: 'INCREMENT_ASYNC' });
   }
 
   render() {
-    console.log(style);
-    return (
-      <div className={style.root}>
-        <div>react-router 测试</div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/about/">页面一</Link>
-            </li>
-            <li>
-              <Link to="/users/">页面</Link>
-            </li>
-          </ul>
-        </nav>
-
-        <br />
-        <div>redux & redux-saga测试</div>
-        <div>
-          current number： {this.props.number}{' '}
-          <button onClick={() => this.onClick()}>点击+1</button>
-        </div>
-        <div>
-          current number： {this.props.number}{' '}
-          <button onClick={() => this.onClick2()}>点击2秒后+1</button>
-        </div>
-      </div>
-    );
+    const pathname = window.location.pathname
+    if (pathname === '/login')
+      return (
+        <Login />
+      )
+    else
+      return (
+        <Layout className={styles.root}>
+          <HeaderNav />
+          <Content>
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/union" component={Union} />
+              <Route path="/myUnion" component={MyUnion} />
+              <Redirect to="/" />
+            </Switch>
+          </Content>
+        </Layout>
+      );
   }
 }
-export default connect(state => ({
-  number: state.number,
-}))(App);
+// export default connect(state => ({
+//   number: state.number,
+// }))(App);
+
+export default App

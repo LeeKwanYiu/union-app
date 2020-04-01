@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import store from './store';
 import App from './views/App';
+import Login from './views/Login';
 import * as serviceWorker from './serviceWorker';
 
 import './common.less';
@@ -11,9 +12,7 @@ import './common.less';
 ReactDom.render(
   <Provider store={store}>
     <Router>
-      <Switch>
-        <Route path="/" exact component={App} />
-      </Switch>
+      <Route path="/" component={App} />
     </Router>
   </Provider>,
   document.getElementById('root')

@@ -1,0 +1,24 @@
+.root {
+  padding: 1rem;
+  height: 250px;
+  .name {
+    font-size: 2rem;
+    font-weight: bold;
+    white-space: nowrap;  
+    text-overflow:ellipsis;    
+    overflow:hidden;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .descrip {
+    color: #858585;
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .bt {
+    float: right;
+    margin-right: 10px;
+  }
+}

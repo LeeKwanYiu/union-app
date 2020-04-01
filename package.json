@@ -1,5 +1,5 @@
 {
-  "name": "union",
+  "name": "union-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.1.2",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
+    "antd": "^4.0.2",
     "babel-eslint": "10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
@@ -148,9 +149,20 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      [
+        "import",
+        {
+          "libraryName": "antd",
+          "libraryDirectory": "es",
+          "style": "css"
+        }
+      ]
     ]
   },
   "devDependencies": {
+    "babel-plugin-import": "^1.13.0",
     "less": "^3.11.1",
     "less-loader": "^5.0.0"
   }
