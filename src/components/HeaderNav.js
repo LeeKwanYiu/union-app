@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Layout, Menu, Avatar } from 'antd'
 import { UserOutlined } from '@ant-design/icons';
-import { navList } from '../../../config/nav'
+import { navList } from '../config/nav'
 import styles from './HeaderNav.less'
 
 const { Header } = Layout
@@ -13,7 +13,7 @@ const { Header } = Layout
 */
 class HeaderNav extends React.Component {
   state = {
-    selectedKeys: navList[0].key || ''
+    selectedKeys: [navList[0].key || '']
   }
 
   componentDidMount() {
@@ -25,14 +25,14 @@ class HeaderNav extends React.Component {
     const { pathname } = window.location
     const key = pathname.split('/')[1] || 'home'
     this.setState({
-      selectedKeys: key
+      selectedKeys: [key]
     })
   }
 
   // 点击后更新选择的key
   handleSelect = ({ key }) => {
     this.setState({
-      selectedKeys: key
+      selectedKeys: [key]
     })
   }
 

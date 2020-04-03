@@ -3,18 +3,13 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import store from './store';
-import App from './views/App';
-import Login from './views/Login';
+import App from './router/App';
 import * as serviceWorker from './serviceWorker';
 
 import './common.less';
 
 ReactDom.render(
-  <Provider store={store}>
-    <Router>
-      <Route path="/" component={App} />
-    </Router>
-  </Provider>,
+  <App />,
   document.getElementById('root')
 );
 

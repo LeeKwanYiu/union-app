@@ -2,7 +2,7 @@ export const navList = [
   {
     key: 'home',
     title: '首页',
-    path: '/home',
+    path: '/',
   },
   {
     key: 'union',
@@ -10,8 +10,8 @@ export const navList = [
     path: '/union',
   },
   {
-    key: 'myUnion',
+    key: 'myunion',
     title: '我的社团',
-    path: '/myUnion',
+    path: '/myunion',
   }
 ]

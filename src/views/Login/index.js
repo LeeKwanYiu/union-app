@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router'
 import { Row, Col, Form, Input, Button, Card } from "antd";
 import { UserOutlined, LockOutlined, AntCloudOutlined } from '@ant-design/icons';
 import style from './index.less'
@@ -29,9 +31,15 @@ class LoginPage extends React.Component {
   };
 
 
-  // 提交登录信息
-  handleSubmit = e => {
-
+  // 提交登录信息并跳转
+  handleSubmit = async data => {
+    const { dispatch, history } = this.props
+    dispatch({
+      type: 'LOGIN',
+      payload: data,
+      history
+    })
+    // console.log(a)
   };
 
   render() {
@@ -39,7 +47,7 @@ class LoginPage extends React.Component {
       <Form onFinish={this.handleSubmit} className="login-form">
         <FormItem
           hasFeedback
-          name="username"
+          name="name"
           rules={[
             {
               required: true,
@@ -111,5 +119,9 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage
+export default connect(
+  state => ({
+    loginState: state.loginPage
+  })
+)(withRouter(LoginPage))
 
