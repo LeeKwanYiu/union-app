@@ -1,18 +1,11 @@
 const _state = {
-  user_id: '',
-  user_name: '',
-  user_role: 'user',
+  userInfo: {}
 }
 
 export function loginReducer(state = _state, { payload, type }) {
   switch (type) {
-    case 'USER_LOGIN':
-      const {
-        user_id = '',
-        user_name = '',
-        user_role = 'user'
-      } = payload
-      return { user_id, user_name, user_role }
+    case 'USER_INIT':
+      return { ...state, userInfo: payload }
     default:
       return state
   }

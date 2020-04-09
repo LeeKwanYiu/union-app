@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Layout, Menu, Avatar } from 'antd'
+import { connect } from 'react-redux'
 import { UserOutlined } from '@ant-design/icons';
 import { navList } from '../config/nav'
 import styles from './HeaderNav.less'
+import UserAvatar from './UserAvatar'
 
 const { Header } = Layout
-
 
 /*
   定义头部内容哦
@@ -18,6 +19,10 @@ class HeaderNav extends React.Component {
 
   componentDidMount() {
     this.handleRefresh();
+    const { dispatch } = this.props
+    dispatch({
+      type: 'GET_USER_INFO'
+    })
   }
 
   // 刷新时保持高亮
@@ -46,7 +51,7 @@ class HeaderNav extends React.Component {
       <div className={styles.root}>
         <Header className={head}>
           <div className={styles.user}>
-            <Avatar shape="square" size={64} icon={<UserOutlined />} />
+            <UserAvatar />
           </div>
           <Menu
             mode="horizontal"
@@ -82,4 +87,8 @@ class HeaderNav extends React.Component {
   }
 }
 
-export default HeaderNav;
+export default connect(
+  state => ({
+    loginState: state.loginPage
+  })
+)(HeaderNav)

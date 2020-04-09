@@ -43,6 +43,7 @@ class LoginPage extends React.Component {
   };
 
   render() {
+    const { loginState } = this.props
     const form = (
       <Form onFinish={this.handleSubmit} className="login-form">
         <FormItem

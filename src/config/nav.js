@@ -15,3 +15,21 @@ export const navList = [
     path: '/myunion',
   }
 ]
+
+export const adminNav = [
+  {
+    key: 'application',
+    title: '申请列表',
+    path: '/application',
+  },
+  {
+    key: 'userlist',
+    title: '用户列表',
+    path: '/userlist'
+  },
+  {
+    key: 'unionlist',
+    title: '社团列表',
+    path: '/unionlist'
+  }
+]

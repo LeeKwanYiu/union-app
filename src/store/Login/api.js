@@ -7,6 +7,13 @@ const loginApi = {
       method: "POST",
       data
     })
+  },
+  getUserRequest: data => {
+    return request({
+      url: '/api/user',
+      method: "GET",
+      data
+    })
   }
 }
 
