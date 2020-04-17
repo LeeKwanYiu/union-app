@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout, Menu } from 'antd'
 import { Link } from 'react-router-dom'
-import { adminNav } from '../config/nav'
+import { adminNav } from '../../config/nav'
 
 const { Sider } = Layout
 

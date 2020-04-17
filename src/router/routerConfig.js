@@ -1,17 +1,25 @@
 import MyUnion from '../views/MyUnion';
 import Home from '../views/Home';
 import Union from '../views/Union';
-import Login from '../views/Login';
 import Application from '../views/Application'
-import UserList from '../views/UserList'
+import UserList from '../views/UnionUserList'
 import UnionList from '../views/UnionList'
-import NotFound from '../views/NotFound';
+import Introduction from '../views/Introduction'
+import UnionApplication from '../views/UnionApplication'
+import UnionUserList from '../views/UnionUserList'
+import ProjectList from '../views/ProjectList'
+import TaskList from '../views/TaskList'
 
 const routerConfig = {
-  'user': [
+  'user': params => [
     { path: '/', component: Home, role: ['user'] },
     { path: '/union', component: Union, role: ['user'] },
     { path: '/myunion', component: MyUnion, role: ['user'] },
+    { path: `/myunion/${params.unionId}/introduction`, component: Introduction },
+    { path: `/myunion/${params.unionId}/users`, component: UnionUserList },
+    { path: `/myunion/${params.unionId}/projects`, component: ProjectList },
+    { path: `/myunion/${params.unionId}/applications`, component: UnionApplication },
+    { path: `/myunion/${params.unionId}/projects/${params.projectId}`, component: TaskList }
   ],
   'admin': [
     { path: '/application', component: Application, role: ['admin'] },

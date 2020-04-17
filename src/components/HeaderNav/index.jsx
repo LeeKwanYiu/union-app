@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import { Layout, Menu, Avatar } from 'antd'
 import { connect } from 'react-redux'
 import { UserOutlined } from '@ant-design/icons';
-import { navList } from '../config/nav'
+import { navList } from '../../config/nav'
 import styles from './HeaderNav.less'
-import UserAvatar from './UserAvatar'
+import UserAvatar from '../UserAvatar'
 
 const { Header } = Layout
 
@@ -42,7 +42,7 @@ class HeaderNav extends React.Component {
   }
 
   render() {
-    const { selectedKeys } = this.state
+    let { selectedKeys } = this.state
     const { pathname } = window.location
     // 不同页面头部的不同展示
     const head = pathname === '/' ? "first-page" : "other-page"

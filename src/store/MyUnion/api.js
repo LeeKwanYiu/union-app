@@ -8,6 +8,12 @@ const myUnionApi = {
       data
     })
   },
+  getMyunionsReq: () => {
+    return request({
+      url: '/api/myunion',
+      method: "GET"
+    })
+  }
 }
 
 export default myUnionApi;

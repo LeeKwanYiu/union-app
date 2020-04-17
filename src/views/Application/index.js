@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import types from '../../config/type'
 
 const color = ['magenta', 'orange', 'red', 'volcano', 'blue', 'lime', 'cyan']
-const pageSize = 2
+const pageSize = 10
 
 
 class Application extends React.Component {
@@ -33,7 +33,6 @@ class Application extends React.Component {
   confirm = (id, operation, currentPage) => {
     const data = { id, operation }
     const { dispatch } = this.props
-    console.log(currentPage)
     dispatch({
       type: 'OPERATION',
       payload: data,

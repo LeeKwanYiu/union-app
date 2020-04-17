@@ -33,3 +33,26 @@ export const adminNav = [
     path: '/unionlist'
   }
 ]
+
+export const unionNavList = params => [
+  {
+    key: 'introduction',
+    title: '简介',
+    path: `/myunion/${params}/introduction`
+  },
+  {
+    key: 'users',
+    title: '成员管理',
+    path: `/myunion/${params}/users`
+  },
+  {
+    key: 'project',
+    title: '项目管理',
+    path: `/myunion/${params}/projects`
+  },
+  {
+    key: 'applycationList',
+    title: '申请列表',
+    path: `/myunion/${params}/applications`
+  }
+]

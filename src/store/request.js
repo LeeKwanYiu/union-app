@@ -31,6 +31,10 @@ request.interceptors.response.use(
         duration: 2,
       })
     }
+    if (errorCode === 20002) {
+      localStorage.removeItem('token')
+      window.location.pathname = '/login'
+    }
     return data
   },
   error => {

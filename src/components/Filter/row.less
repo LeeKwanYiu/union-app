@@ -1,0 +1,25 @@
+.root {
+  padding-left: 16px!important;
+  :global(.tag){
+    margin-right: 4px;
+    padding-top: 3px;
+    display: inline-block;
+    cursor: pointer;
+    :global(.text) {
+      padding: 4px 10px;
+      zoom: 1;
+      line-height: 20px;
+      border-radius: 2px;
+    }
+  }
+  :global(.unactive) {
+    &:hover {
+      color: #258dcd;
+    }
+  }
+  :global(.active) {
+    opacity: .8;
+    background: #258dcd;
+    color: #fff;
+  }
+}

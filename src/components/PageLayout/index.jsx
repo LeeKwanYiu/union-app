@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout } from 'antd';
-import UserAvatar from './UserAvatar'
-import HeaderNav from './HeaderNav';
-import SiderNav from './SiderNav';
+import UserAvatar from '../UserAvatar'
+import HeaderNav from '../HeaderNav';
+import SiderNav from '../SiderNav';
 import styles from './PageLayout.less';
 
 const { Content, Header } = Layout

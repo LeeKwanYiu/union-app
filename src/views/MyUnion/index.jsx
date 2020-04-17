@@ -11,6 +11,13 @@ class MyUnion extends React.Component {
     visible: false
   }
 
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch({
+      type: 'GET_MYUNION',
+    })
+  }
+
   onCreate = values => {
     const { loginState, dispatch } = this.props
     const { userInfo } = loginState
@@ -35,6 +42,8 @@ class MyUnion extends React.Component {
 
   render() {
     const { visible } = this.state
+    const { myUnionState } = this.props
+    const { myUnion } = myUnionState
     return (
       <div className={styles.root}>
         <div className={styles.topPart}>
@@ -46,18 +55,17 @@ class MyUnion extends React.Component {
             <Button type="link" style={{ fontSize: '1.2rem' }} onClick={this.handleClick}>+新建社团</Button>
           </p>
           <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-            <Col span={8}>
-              <UnionItem />
-            </Col>
-            <Col span={8}>
-              <UnionItem />
-            </Col>
-            <Col span={8}>
-              <UnionItem />
-            </Col>
-            <Col span={8}>
-              <UnionItem />
-            </Col>
+            {
+              myUnion.map((item, index) => (
+                <Col span={8} key={index}>
+                  <UnionItem
+                    unionName={item.unionName}
+                    introduction={item.introduction}
+                    id={item._id}
+                  />
+                </Col>
+              ))
+            }
           </Row>
         </div>
         <CreateUnionModal

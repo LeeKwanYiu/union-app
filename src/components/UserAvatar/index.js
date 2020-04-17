@@ -3,7 +3,7 @@ import { Menu, Dropdown, Avatar, Drawer, List, Typography, Button, Badge } from 
 import { UserOutlined } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import request from '../store/request'
+import request from '../../store/request'
 
 class UserAvatar extends React.Component {
   state = {

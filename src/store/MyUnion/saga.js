@@ -1,11 +1,13 @@
-import { call, takeLatest, fork } from 'redux-saga/effects'
+import { call, takeLatest, fork, put } from 'redux-saga/effects'
 import { message } from 'antd'
 import myUnionApi from './api'
 
 const {
-  applicationSubmitReq
+  applicationSubmitReq,
+  getMyunionsReq
 } = myUnionApi
 
+// 提交申请
 function* applicationSubmit({ payload }) {
   console.log(payload)
   const key = 'submit'
@@ -20,11 +22,28 @@ function* applicationSubmit({ payload }) {
   }
 }
 
+// 获取我的社团
+function* getMyUnion() {
+  const result = yield call(getMyunionsReq)
+  const { errorCode } = result
+  if (errorCode === 0) {
+    const { data } = result
+    yield put({
+      type: 'GET_MY_UNION',
+      payload: data
+    })
+  }
+}
 function* watchApplicationSubmit() {
   yield takeLatest('APPLICATION_SUBMIT', applicationSubmit)
 }
 
+function* watchGetMyUnion() {
+  yield takeLatest('GET_MYUNION', getMyUnion)
+}
+
 
 export const myUnionSagas = [
-  fork(watchApplicationSubmit)
+  fork(watchApplicationSubmit),
+  fork(watchGetMyUnion)
 ]
