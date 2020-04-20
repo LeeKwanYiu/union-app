@@ -4,10 +4,15 @@ import { matchPath } from 'react-router-dom'
 import { connect } from 'react-redux'
 import request from '../../store/request'
 import CreateTaskModal from './components/CreateTaskModal'
-
-const stateLabel = ['未处理', '审核中', '已完成']
+import TaskDrawer from './components/TaskDrawer'
+import stateLabel from './stateLabel'
 
 const { Option } = Select
+
+message.config({
+  duration: 1,
+  maxCount: 1,
+});
 
 class TaskList extends React.Component {
   state = {
@@ -15,7 +20,8 @@ class TaskList extends React.Component {
     users: [],
     admins: [],
     visible: false,
-    open: false
+    drawerVisible: false,
+    task: {} // 点击的任务
   }
 
   async componentDidMount() {
@@ -45,7 +51,6 @@ class TaskList extends React.Component {
 
   init = async () => {
     const { loginState } = this.props
-    console.log(loginState)
     const { id } = loginState.userInfo
     const { admins } = this.state
     const result = await request({
@@ -54,7 +59,6 @@ class TaskList extends React.Component {
     })
     if (result.errorCode === 0) {
       const { data } = result
-      console.log(admins.find(v => v._id === id), admins, id)
       data.forEach((item, index) => {
         if (item.user.id === id || admins.find(v => v._id === id))
           data[index].open = undefined
@@ -96,8 +100,46 @@ class TaskList extends React.Component {
       message.error('暂无编辑权限')
   }
 
+  onClose = () => {
+    this.setState({
+      drawerVisible: false
+    })
+    this.init()
+  }
+
+  handleSelect = async ({ _id }, value) => {
+    const { loginState } = this.props
+    const { id } = loginState.userInfo
+    const result = await request({
+      url: `/api/tasks/${_id}`,
+      method: 'POST',
+      data: {
+        taskState: value,
+        userId: id,
+      }
+    })
+    if (result.errorCode === 0) {
+      message.success('更改状态成功')
+      this.init()
+    }
+    else
+      message.error('更改状态失败')
+  }
+  // 点击打开详情
+  handleClick = ({ _id }) => {
+    console.log(1)
+    const { dispatch } = this.props
+    dispatch({
+      type: 'GET_TASK',
+      params: {
+        taskId: _id
+      }
+    })
+    this.setState({ drawerVisible: true })
+  }
+
   render() {
-    const { data, users, visible } = this.state
+    const { data, users, visible, drawerVisible, task } = this.state
     const columns = [
       {
         title: '任务ID',
@@ -131,7 +173,13 @@ class TaskList extends React.Component {
         dataIndex: 'taskState',
         key: 'taskState',
         render: (state, row) =>
-          <Select value={state} style={{ width: '100%' }} onDropdownVisibleChange={() => this.handleDropDown(row.open)} open={row.open}>
+          <Select
+            value={state}
+            style={{ width: '100%' }}
+            onDropdownVisibleChange={() => this.handleDropDown(row.open)}
+            open={row.open}
+            onSelect={value => this.handleSelect(row, value)}
+          >
             {
               stateLabel.map((item, index) =>
                 <Option key={index} value={index}>{item}</Option>
@@ -142,8 +190,8 @@ class TaskList extends React.Component {
       {
         title: '操作',
         key: 'operation',
-        render: () => (
-          <a>查看详情</a>
+        render: (_, row) => (
+          <a onClick={() => this.handleClick(row)}>查看详情</a>
         )
       }
     ]
@@ -167,6 +215,11 @@ class TaskList extends React.Component {
           }}
           users={users}
         />
+        <TaskDrawer
+          visible={drawerVisible}
+          onClose={this.onClose}
+          task={task}
+        />
       </>
     )
   }
@@ -175,6 +228,7 @@ class TaskList extends React.Component {
 
 export default connect(
   state => ({
-    loginState: state.loginPage
+    loginState: state.loginPage,
+    taskListState: state.taskListPage
   })
 )(TaskList)
