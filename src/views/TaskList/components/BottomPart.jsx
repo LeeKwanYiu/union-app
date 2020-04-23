@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Menu, Layout } from 'antd'
 import Note from './Note'
+import AnnexUpload from './AnnexUpload'
 
 const { Header, Content } = Layout
 
@@ -22,7 +23,7 @@ const BottomPart = ({ taskId }) => {
       <Content style={{ height: '100%!important', padding: 30 }}>
         {
           key[0] === 'annex' ? (
-            1
+            <AnnexUpload />
           ) : (
               <Note taskId={taskId} />
             )
