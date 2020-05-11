@@ -24,11 +24,13 @@ class AnnexUpload extends React.Component {
   }
 
   customRequest = async data => {
-    const { taskListState, dispatch } = this.props
+    const { taskListState, loginState, dispatch } = this.props
     const { task } = taskListState
+    const { userInfo } = loginState
     const { _id } = task
     const formData = new FormData();
     formData.append('file', data.file)
+    formData.append('name', userInfo.name)
     const result = await request({
       url: `/api/upload/${_id}`,
       data: formData,
@@ -46,6 +48,29 @@ class AnnexUpload extends React.Component {
       message.error('上传失败')
   }
 
+  onRemove = async file => {
+    const { taskListState, loginState, dispatch } = this.props
+    const { task } = taskListState
+    const { userInfo } = loginState
+    const { _id } = task
+    const { uid } = file
+    const result = await request({
+      url: `/api/tasks/${_id}/files/${uid}`,
+      data: { name: userInfo.name },
+      method: 'DELETE'
+    })
+    if (result.errorCode === 0) {
+      message.success('删除成功')
+      dispatch({
+        type: 'GET_TASK',
+        params: {
+          taskId: _id
+        }
+      })
+    } else
+      message.error('删除失败')
+  }
+
   render() {
     const { taskListState } = this.props
     const { task } = taskListState
@@ -54,7 +79,8 @@ class AnnexUpload extends React.Component {
       listType: 'picture',
       fileList: files,
       className: 'upload-list-inline',
-      customRequest: this.customRequest
+      customRequest: this.customRequest,
+      onRemove: this.onRemove
       // onPreview: file => {
       //   download(file.url, file.name)
       // }
@@ -73,6 +99,7 @@ class AnnexUpload extends React.Component {
 
 export default connect(
   state => ({
-    taskListState: state.taskListPage
+    taskListState: state.taskListPage,
+    loginState: state.loginPage
   })
 )(AnnexUpload)

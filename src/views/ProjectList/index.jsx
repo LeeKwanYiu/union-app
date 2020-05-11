@@ -1,8 +1,10 @@
 import React from 'react'
-import { Table, Button, Form, Select, Input } from 'antd'
+import { Table, Button, Form, Select, Input, message } from 'antd'
 import { matchPath } from 'react-router-dom'
 import { withRouter } from 'react-router'
+import { connect } from 'react-redux';
 import request from '../../store/request'
+import CreateModal from './components/CreateModal'
 
 const moment = require('moment')
 const { Option } = Select
@@ -11,7 +13,8 @@ class ProjectList extends React.Component {
   formRef = React.createRef();
 
   state = {
-    data: []
+    data: [],
+    visible: false
   }
 
   componentDidMount() {
@@ -51,8 +54,33 @@ class ProjectList extends React.Component {
     history.push(`${location.pathname}/${_id}`)
   }
 
+  onCreate = async values => {
+    const { loginState } = this.props
+    const { userInfo } = loginState
+    const { id } = userInfo
+    const data = {
+      ...values,
+      unionId: this.unionId,
+      creator: id
+    }
+    const result = await request({
+      url: '/api/project',
+      method: 'POST',
+      data
+    })
+    if (result.errorCode === 0) {
+      message.success('添加成功')
+      this.setState({
+        visible: false
+      })
+      await this.init(this.unionId)
+    }
+    else
+      message.error('添加失败')
+  }
+
   render() {
-    const { data } = this.state
+    const { data, visible } = this.state
     const { history } = this.props
     const columns = [
       {
@@ -100,6 +128,9 @@ class ProjectList extends React.Component {
           <Form.Item>
             <Button type="primary" htmlType="submit">搜索</Button>
           </Form.Item>
+          <Form.Item>
+            <Button onClick={() => this.setState({ visible: true })}>添加</Button>
+          </Form.Item>
         </Form>
         <Table
           columns={columns}
@@ -107,9 +138,22 @@ class ProjectList extends React.Component {
           pagination={false}
           style={{ marginTop: 20 }}
         />
+        <CreateModal
+          visible={visible}
+          onCreate={this.onCreate}
+          onCancel={() => {
+            this.setState({
+              visible: false
+            })
+          }}
+        />
       </>
     )
   }
 }
 
-export default withRouter(ProjectList);
+export default connect(
+  state => ({
+    loginState: state.loginPage
+  })
+)(withRouter(ProjectList));
